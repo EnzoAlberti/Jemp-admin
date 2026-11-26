@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UserController; // <--- Adiciona esta linha
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\WarehouseController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -26,5 +27,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/users/{user}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
     Route::put('/admin/users/{user}', [UserController::class, 'update'])->name('admin.users.update');
     Route::delete('/admin/users/{user}', [UserController::class, 'destroy'])->name('admin.users.destroy');
+
+    // Rotas de Warehouse
+    Route::get('/admin/warehouses', [WarehouseController::class, 'index'])->name('admin.warehouses.index');
+    Route::patch('/admin/warehouses/{warehouse}/approve', [WarehouseController::class, 'approve'])->name('admin.warehouses.approve');
+    Route::patch('/admin/warehouses/{warehouse}/reject', [WarehouseController::class, 'reject'])->name('admin.warehouses.reject');
+    Route::patch('/admin/warehouses/{warehouse}/toggle-status', [WarehouseController::class, 'toggleStatus'])->name('admin.warehouses.toggle-status');
 });
 require __DIR__.'/auth.php';
